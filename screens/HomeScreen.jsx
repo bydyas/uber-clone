@@ -5,6 +5,7 @@ import { GOOGLE_MAPS_API_KEY } from '@env';
 import { useDispatch } from 'react-redux';
 import { setDestination, setOrigin } from '../slices/navSlice';
 import NavOptions from '../components/NavOptions';
+import NavFavourites from '../components/NavFavourites';
 import globalStyles from '../globalStyles';
 import tw from 'tailwind-react-native-classnames';
 
@@ -43,6 +44,7 @@ const HomeScreen = () => {
                 />
 
                 <NavOptions />
+                <NavFavourites />
             </View>
         </SafeAreaView>
     );
