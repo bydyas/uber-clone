@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { StyleSheet } from 'react-native';
@@ -12,24 +12,20 @@ const Map = () => {
     const mapRef = useRef(null);
 
     useEffect(() => {
-        if (!origin || !destination) {
-            return;
-        }
-        // Zoom & fit to markers
-        mapRef.current.fitToSuppliedMarkers(['origin', 'destination'], {
-            edgePadding: {
-                top: 50,
-                right: 50,
-                bottom: 50,
-                left: 50,
-            },
-        });
+        if (!origin || !destination) return;
+
+        setTimeout(() => {
+            mapRef.current.fitToSuppliedMarkers(['destination', 'origin'], {
+                edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+                animated: true,
+            });
+        }, 500);
     }, [origin, destination]);
 
     return (
         <MapView
-            ref={mapRef}
             style={styles.root}
+            ref={mapRef}
             mapType="mutedStandard"
             initialRegion={{
                 latitude: origin.location.lat,
@@ -55,7 +51,7 @@ const Map = () => {
                     }}
                     title="Origin"
                     description={origin.description}
-                    identifier="origin"
+                    identifier={'origin'}
                 />
             )}
 
@@ -66,8 +62,8 @@ const Map = () => {
                         longitude: destination.location.lng,
                     }}
                     title="Destination"
-                    description={origin.description}
-                    identifier="destination"
+                    description={destination.description}
+                    identifier={'destination'}
                 />
             )}
         </MapView>
